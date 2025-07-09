@@ -65,7 +65,7 @@ KMS_INVENTORY ANALYSIS/
 
 ├── 📄 KMS_INVENTORY.txt – Notes, rough work, and process details
 
-├── 📊 KMS_Results.xlsx – Final query results pasted from SSMS
+├── 📊 KMS_Analysis_Results.md – Final query results pasted from SSMS,        insights, and advice
 
 └── 📁 Source Data/
 
