@@ -1,5 +1,7 @@
 # Kultra Mega Stores (KMS) Inventory Analysis
 
+**Analysis done by Vincent Chukwudumebi Joy**
+
 ---
 ## Case Scenario 1
 
