@@ -66,7 +66,7 @@ ORDER BY [Total_Sales] asc
 --- Q3: What were the total sales of appliances in Ontario?---
 SELECT Region, CAST(SUM(sales) AS DECIMAL(18,2)) AS [Total Sales]
 FROM KMS_INVENTORY
-WHERE Region='Ontario' AND Product_Sub_Category= 'Appliances'
+WHERE Region='Ontario' AND Product_Category= 'Appliances'
 GROUP BY Region
 
 
