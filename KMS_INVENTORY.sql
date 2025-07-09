@@ -1,6 +1,6 @@
 -- KMS Inventory Analysis
--- Author: Your Name
--- Date: July 2025
+-- Author: Vincent Chukwudumebi Joy
+-- Date: 6th July 2025
 
 --CREATE DATABASE--
 
@@ -43,7 +43,7 @@ Status NVARCHAR(50)
 ---CASE SCENARIO 1---
 
 --- Q1: Which product category had the highest  sales?---
-SELECT TOP 1 [Product_Category], CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total_Sales]
+SELECT [Product_Category], CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total_Sales]
 FROM KMS_INVENTORY
 GROUP BY [Product_Category]
 ORDER BY [Total_Sales] DESC;
@@ -51,79 +51,79 @@ ORDER BY [Total_Sales] DESC;
 
 --- Q2: What are the Top 3 and Bottom 3 regions in terms of sales?---
 --- Top 3 regions in terms of sales ---
-SELECT TOP 3 [Region], CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total Sales]
+SELECT TOP 3 [Region], CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total_Sales]
 FROM [KMS_INVENTORY]
 GROUP BY Region
-ORDER BY [Total Sales] desc
+ORDER BY [Total_Sales] DESC;
 
 --- Bottom 3 regions in terms of sales ---
 SELECT TOP 3 [Region], CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total_Sales]
 FROM KMS_INVENTORY
 GROUP BY [REGION]
-ORDER BY [Total_Sales] asc
+ORDER BY [Total_Sales] asc;
 
 
 --- Q3: What were the total sales of appliances in Ontario?---
-SELECT Region, CAST(SUM(sales) AS DECIMAL(18,2)) AS [Total Sales]
+SELECT Region, CAST(SUM(sales) AS DECIMAL(18,2)) AS [Total_Sales]
 FROM KMS_INVENTORY
 WHERE Region='Ontario' AND Product_Category= 'Appliances'
 GROUP BY Region
 
 
 ------- Q4: Revenue from Bottom 10 customers-----
-SELECT TOP 10 [Customer_Name], CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total Sales]
+SELECT TOP 10 [Customer_Name], CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total_Sales]
 FROM KMS_INVENTORY
 GROUP BY Customer_Name
-ORDER BY [Total Sales] asc
+ORDER BY [Total_Sales] ASC;
 
 ----Checked Customer Buying Habits----
-SELECT Customer_Name,
+SELECT TOP 10 Customer_Name,
 COUNT(DISTINCT Order_ID) AS Total_Orders,
-SUM(Order_Quantity) AS Total_Quantity_Purchased,
-AVG(Order_Quantity) AS Avg_Quantity_per_Order,
-SUM(Sales) AS Total_Sales,
+SUM(Order_Quantity) AS Total_Qty_Bought,
+AVG(Order_Quantity) AS Avg_Qty_per_Order,
+CAST(SUM(Sales) AS DECIMAL(18,2)) AS Total_Sales,
 MAX(Product_Name) AS Regular_Product
 FROM KMS_INVENTORY
 GROUP BY Customer_Name
-ORDER BY Total_Sales DESC;
+ORDER BY Total_Sales ASC;
 
 ------- Q5: KMS incurred the most shipping cost using which shipping method?------
-SELECT TOP 1 [Ship_Mode], CAST(SUM([Shipping_Cost]) AS DECIMAL(18,2)) AS [Total Shipping Cost]
+SELECT TOP 1 [Ship_Mode], CAST(SUM([Shipping_Cost]) AS DECIMAL(18,2)) AS [Total_Shipping_Cost]
 FROM KMS_INVENTORY
 GROUP BY Ship_Mode
-ORDER BY [Total Shipping Cost] desc
+ORDER BY [Total_Shipping_Cost] DESC;
 
 
 ---CASE SCENARIO 2---
------- Q6: Who are the most valuable customer, and what products or services did they typically purchase?------
-SELECT [Customer_Name],Product_Name, CAST(SUM(Sales) AS DECIMAL(18,2)) AS [Total Sales]
+------ Q6: Who are the most valuable customers, and what products or services did they typically purchase?------
+SELECT TOP 10 [Customer_Name],Product_Name, CAST(SUM(Sales) AS DECIMAL(18,2)) AS [Total_Sales]
 FROM KMS_INVENTORY
 GROUP BY Customer_Name,Product_Name
-ORDER BY [Total Sales] desc
+ORDER BY [Total_Sales] DESC;
 
 
 -------Q7: Which small business customer has the highest sales?-------
-SELECT TOP 1 Customer_Name,Customer_Segment, CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total Sales]
+SELECT TOP 1 Customer_Name,Customer_Segment, CAST(SUM([Sales]) AS DECIMAL(18,2)) AS [Total_Sales]
 FROM KMS_INVENTORY
 WHERE Customer_Segment ='Small Business'
 GROUP BY Customer_Name,Customer_Segment
-ORDER BY [Total Sales] desc
+ORDER BY [Total_Sales] DESC;
 
 
 -----Q8: Which corporate customer placed the most number of orders in 2019 -2012?------
-SELECT TOP 1  Customer_Name,Customer_Segment, COUNT([Order_ID]) AS [Total order]
+SELECT TOP 1  Customer_Name,Customer_Segment, COUNT([Order_ID]) AS [Total_Order]
 FROM KMS_INVENTORY
 WHERE Customer_Segment ='Corporate' and Order_Date between '2009' and '2012'
 GROUP BY Customer_Name,Customer_Segment
-ORDER BY [Total order] desc
+ORDER BY [Total_Order] DESC;
 
 
 ------Q9: Which consumer customer was the most profitable one?------
-SELECT TOP 1 Customer_Name,Customer_Segment, CAST(SUM([Profit]) AS DECIMAL(18,2)) AS [Total profit]
+SELECT TOP 1 Customer_Name,Customer_Segment, CAST(SUM([Profit]) AS DECIMAL(18,2)) AS [Total_Profit]
 FROM KMS_INVENTORY
 WHERE Customer_Segment ='Consumer'
 GROUP BY Customer_Name,Customer_Segment
-ORDER BY [Total profit] desc
+ORDER BY [Total_Profit] DESC;
 
 
 -------Q10: Which customer returned items, and what segments do they belong to?------
@@ -137,11 +137,11 @@ ORDER BY Customer_Name
 --------Q11: Analyse shipping costs vs ship mode based on order priority------
 SELECT Order_Priority, Ship_Mode,
 COUNT(Order_ID) AS Order_Count,
-SUM(Sales - Profit) AS Estimated_Shipping_Cost,
+CAST(SUM(Sales - Profit) AS DECIMAL(18,2)) AS Estimated_Shipping_Cost,
 AVG(DATEDIFF(DAY, Order_Date, Ship_Date)) AS AVERAGE_SHIP_DATE
 FROM KMS_INVENTORY
 GROUP BY Order_Priority, Ship_Mode
-ORDER BY Order_Priority, Ship_Mode desc;
+ORDER BY Order_Priority, Ship_Mode DESC;
 
 
 
